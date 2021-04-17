@@ -1,7 +1,7 @@
 import sys
 sys.path.append('')
-import pygame as p
 from Chess import ChessEngine
+import pygame as p
 
 
 WIDTH = HEIGHT = 512
@@ -57,11 +57,11 @@ def main():
 
                     for i in range(len(validMoves)):
                         if(move == validMoves[i]):
-                            gs.makeMove(move)
+                            gs.makeMove(validMoves[i])
                             moveMade = True
                             sqSelected = ()
                             playerClicks = []
-                    if not move:
+                    if not moveMade:
                         playerClicks = [sqSelected]
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_z:
