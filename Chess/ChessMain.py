@@ -19,7 +19,7 @@ def loadImages():
 
     for piece in pieces:
         IMAGES[piece] = p.transform.scale(p.image.load(
-            "Chess/images/"+piece+".png"), (SQUARE_SIZE, SQUARE_SIZE))
+            "Chess/chess_images/"+piece+".png"), (SQUARE_SIZE, SQUARE_SIZE))
 
 
 def main():
@@ -73,19 +73,39 @@ def main():
             validMoves = gs.getAllValidMoves()
             moveMade = False
 
-        drawGameState(screen, gs)
+        drawGameState(screen, gs, validMoves, sqSelected)
         clock.tick(MAX_FPS)
         p.display.flip()
 
 
-def drawGameState(screen, gs):
+def highlightingSquares(screen, gs, validMoves, sqSelected):
+
+    if sqSelected != ():
+        r, c = sqSelected
+        if gs.board[r][c][0] == ('w' if gs.whiteToMove else 'b'):
+            # highlight selcted square
+            s = p.Surface((SQUARE_SIZE, SQUARE_SIZE))
+            s.set_alpha(100)
+            s.fill(p.Color('red'))
+            screen.blit(s, (c*SQUARE_SIZE, r * SQUARE_SIZE))
+            # highlight moves form square
+            s.fill(p.Color('yellow'))
+
+            for move in validMoves:
+                if move.startRow == r and move.startCol == c:
+                    screen.blit(s, (SQUARE_SIZE*move.endCol,
+                                    SQUARE_SIZE*move.endRow))
+
+
+def drawGameState(screen, gs, validMoves, sqSelected):
     drawBoard(screen)  # draw square on board
     # piece sugesstion for later
+    highlightingSquares(screen, gs, validMoves, sqSelected)
     drawPieces(screen, gs.board)  # draw pieces on top of board
 
 
 def drawBoard(screen):
-    colors = [p.Color('white'), p.Color("gray")]
+    colors = [p.Color(235, 235, 208), p.Color(119, 148, 85)]
 
     for r in range(DIMENSION):
         for c in range(DIMENSION):
