@@ -1,8 +1,8 @@
 import sys
 sys.path.append('')
-import pygame as p
-from Chess import ChessEngine
 import SmartMoveFinder
+from Chess import ChessEngine
+import pygame as p
 
 WIDTH = HEIGHT = 800
 
@@ -86,9 +86,12 @@ def main():
                     playerClicks = []
                     moveMade = False
                     animate = False
+                    gameOver=False
 
         if not gameOver and not humanTurn:
+            print("player is ", gs.whiteToMove)
             AIMove = SmartMoveFinder.findBestMove(gs, validMoves)
+            # print(AIMove)
             if AIMove is None:
                 AIMove = SmartMoveFinder.findRandomMove(validMoves)
             gs.makeMove(AIMove)
