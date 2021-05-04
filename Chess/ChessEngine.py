@@ -134,6 +134,9 @@ class GameState():
                                             2] = self.board[move.endRow][move.endCol+1]
                     self.board[move.endRow][move.endCol+1] = "--"
 
+            self.staleMate = False
+            self.checkMate = False
+
     def getAllValidMoves(self):
 
         # Debugging
